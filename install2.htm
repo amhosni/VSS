@@ -1,0 +1,215 @@
+﻿<html>
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<title>Visual Studio Setup is complete</title>
+<link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+<BODY vLink=purple link=blue bgColor=white><BASEFONT face="Verdana" color="navy" size="2">
+<script language="JavaScript">
+<!--
+	var strInput;
+	var strRemainingInput;
+	var strPath;
+	var strErrors;
+	var strRollback;
+	var strReadmePath;
+	var i;
+	var strErrorAnchor;
+	var strInstallAnchor;
+	var strWowFlag;
+
+
+	strInput=window.location.search.substring(1,window.location.search.length);
+        strInput = String(strInput.replace(/%2520/g,"%20"));
+	i=strInput.indexOf(";");
+	strErrors=strInput.substring(0,i);
+	strRemainingInput=strInput.substring(i+1,strInput.length);
+	i=strErrors.indexOf("=");
+	strErrors=strErrors.substring(i+1,i+2);
+
+	i=strRemainingInput.indexOf(";");
+	strPath=strRemainingInput.substring(0,i);
+	strRemainingInput=strRemainingInput.substring(i+1,strInput.length);
+	i=strPath.indexOf("=");
+	strPath=strPath.substring(i+1,strPath.length);
+
+	i=strRemainingInput.indexOf("=");
+	strRollback=strRemainingInput.substring(i+1,i+2);
+	strRemainingInput=strRemainingInput.substring(i+3,strInput.length);
+
+	i=strRemainingInput.indexOf(";");
+	strReadmePath=strRemainingInput.substring(0,i);
+	strRemainingInput=strRemainingInput.substring(i+1,strInput.length);
+	i=strReadmePath.indexOf("=");
+	strReadmePath=strReadmePath.substring(i+1,strReadmePath.length);
+
+	i=strRemainingInput.indexOf("=");
+	strWowFlag=strRemainingInput.substring(i+1,i+2);
+
+	// Security precaution
+	forbiddenChars = new RegExp("[<>\'\"]", "g");	// Global search/replace
+	strPath = strPath.replace(forbiddenChars, "");
+	strReadmePath = strReadmePath.replace(forbiddenChars, "");
+
+	document.write("<table width=100%>");
+	document.write("<tr>");
+	document.write("<td width=36><img src=\"file:///"+strReadmePath+"/smallSuccess.gif\"></td>");
+	document.write("<td><font size=4 color=\"green\"><b>Success</b><br>Visual Studio Setup is complete.</font></td>");
+	document.write("</tr>");
+	document.write("</table>")
+	document.write("<img src=\"file:///"+strReadmePath+"/greenrule.gif\" width=\"100%\" height=4><br><br>");
+	
+	document.write("<p style='margin-top: 0; margin-bottom: 6pt'><b>");
+	// Office check for vSTO
+	var vstostr = /(vsto_warning=)\s*(\w*),?(\w*),?(\w*),?(\w*)/;
+	var vstomatch = strInput.toLowerCase().match(vstostr);
+	var vstowarning="<p style='font-size: 14pt; margin-top: 0; margin-bottom: 0pt'>Office Dependency Warning</p>You have successfully installed Microsoft Visual Studio Tools for the Microsoft Office System but do not have the necessary Office components installed to create a project. You must install an edition of Microsoft Office 2003 that supports Visual Studio Tools for Office. You must also install the necessary Office 2003 primary interop assemblies"
+	var bVSTOWarning = false;
+	if(vstomatch!=null)
+	{
+		bVSTOWarning=true;
+		if(vstomatch[2] != null && vstomatch[2] != '')
+		{
+			vstowarning += ". The following primary interop assemblies are missing from your computer: <font color=#FF0000>";
+			for( var j = 1; j < vstomatch.length; j++)
+			{
+				switch(vstomatch[j].toLowerCase())
+				{
+					case "word_pia":
+						vstowarning += "Word,";
+						break;
+					case "excel_pia":
+						vstowarning += "Excel,";
+						break;
+					case "forms_pia":
+						vstowarning += "Forms,";
+						break;
+					case "graph_pia":
+						vstowarning += "Graph,";
+						break;
+					default:
+						;						
+				}
+			}
+			if(vstowarning.substring(vstowarning.length-1,vstowarning.length) == ",")
+				vstowarning = vstowarning.substring(0, vstowarning.length-1);
+
+			vstowarning +="</font>";
+		}
+	}
+	if (bVSTOWarning)
+	{	
+	var loc = window.location.toString();
+	var vstoi;
+	var piainstallpath;
+	vstoi = loc.indexOf("inst");
+	piainstallpath = window.location.toString().substring(0, vstoi);
+	piainstallpath += "\piainstall.htm";
+	vstowarning += ". For detailed installation instructions, click <a target='_blank' href='"+piainstallpath +"'>here</a>";
+	document.write(vstowarning);
+	document.write("<br><br>");
+	}
+
+	if (strErrors != "1")
+	{
+	  document.write("<table width=100%><tr><td valign=top width=50%>");
+	  document.write("<table class=black width=100%><tr><td>");
+	  document.write("<p style='margin-top: 0; margin-bottom: 6pt'><font size=2>");
+	}
+
+	if (strErrors=="1" && strRollback=="1")
+	{
+		document.write ("<font color=red><b>Warnings were generated during setup, causing the installation to roll back. Setup has returned the computer to the state before installation started; all files have been removed.</font><br><br>");
+		document.write ("Review the <a target='_blank' href='file:///" + strPath + "/dd_vserror80.txt'>Error Log</a> and <a target='_blank' href='file:///" + strPath + "/dd_vsinstall80.txt'>Visual Studio Setup Log</a>.</b></font></p></td></tr></table></td></tr></table>");
+	}
+	else
+	{
+		if (strErrors=="1")
+		{
+			document.write ("<b><font color=red>Warnings were generated during setup.</font><br><br>");
+			document.write ("<a target='_blank' href='file:///" + strPath + "/dd_vserror80.txt'>View Error Log</a> and <a target='_blank' href='file:///" + strPath + "/dd_vsinstall80.txt'>Visual Studio Setup Log</a></b>");
+		}
+		else
+		{
+			document.write ("<b><a target='_blank' href='file:///" + strPath + "/dd_vsinstall80.txt'>View the setup log</a></b><br><br>");
+		}
+
+		document.write ("<p style='margin-top: 0; margin-bottom: 0pt'><b>Next Steps:</b></p>");
+		document.write ("<ol style='margin-top: 0pt; margin-bottom: 6pt'>");
+		document.write ("<li><font color=red><b><a href='#SecNotes'>Read security notes</a></b></font></li>");
+		/*
+		document.write ("<li>");
+		document.write ("<b>Register your product</b><br>");
+		document.write ("See <a target='_blank' href='http://register.microsoft.com/regsys/regsys.asp?wizid=4289&amp;lcid=1033'> http://register.microsoft.com/regsys/regsys.asp?wizid=4289&amp;lcid=1033</a> to register this product online.</p></li>");
+		*/
+		document.write ("</ol>");
+
+		document.write("</td></tr></table></td><td width=50%>");
+
+		document.write ("<p style='font-family:verdana; margin-top: 0; margin-bottom: 6pt'><font size='2'>");
+		document.write("<table width=100%><tr><td width=16 valign=top>");
+		document.write("<img src=\"file:///"+strReadmePath+"/addInfoBand.gif\"></td><td>");
+		document.write("<p style='margin-top: 0; margin-bottom: 6pt'><b><font size=2><a name='SecNotes'>Security Notes:</a></font></b></p>");
+		document.write("<img src=\"file:///"+strReadmePath+"/dividerArt.jpg\"><br><font size=2>");
+		document.write ("<p style='margin-top: 6pt; margin-bottom: 0pt;'>It is <font color=#FF0000><b>highly recommended</font></b> that you update this computer with the latest security patches for your operating system. See the <a href='http://windowsupdate.microsoft.com/' target='_blank'>Windows Update</a> Web site for the latest updates. You can also get updates for <a href='http://www.microsoft.com/windows2000/downloads/default.asp' target='_blank'>Windows 2000</a>, <a href='http://www.microsoft.com/windowsxp/pro/downloads/default.asp' target='_blank'>Windows XP</a> and <a href='http://www.microsoft.com/windowsserver2003/downloads/updates/default.mspx' target='_blank'>Windows Server2003</a>.</p>");
+		document.write ("<ul>");
+		document.write ("<li>");
+		document.write ("To analyze your computer for security vulnerabilities, see <a target='_blank' href='http://www.microsoft.com/technet/security/tools/mbsahome.mspx'><b>Microsoft Baseline Security Analyzer (MBSA)</b></a>.ASP</a>. MBSA includes a graphical and command line interface that can perform local or remote scans of Windows systems. MBSA runs on Windows 2000 and Windows XP systems.</li>");
+		document.write ("<li>");
+		document.write ("If you installed a programming language, setup created the VS Developer and Debugger Users groups on this computer. You should only add trusted users to these groups.</li>");
+		document.write ("<li>");
+		document.write ("If Microsoft Internet Information Services (IIS) is installed on this computer, setup automatically registered ASP.NET.</li>");
+		document.write ("<li>");
+		document.write ("If you have installed to a directory other than the default directory, or you installed to a partition that uses the FAT file system, your files might not be protected from other users of the computer. If this computer is shared by other users, you are encouraged to check that the permissions on the installation directory do not allow all users to modify files. Failing to do so could pose a security risk to you.</li>");
+		document.write ("	</ul>");
+
+		document.write("</font>");
+		document.write("</td></tr></table>");
+		document.write("</td></tr></table>");
+	}
+-->
+</script>
+<NOSCRIPT>
+<table width="100%">
+  <tr>
+  <td width=36><img src="smallSuccess.gif"></td>
+  <td><font size=4 color="green"><b>Success</b><br>Visual Studio Setup is complete.</font></td>
+  </tr>
+</table>
+<img src="greenrule.gif" width="100%" height=4><br><br>
+<table width="100%"  border="0">
+  <tr>
+    <td width="50%" valign="top">
+      <table width=100% class=black>
+	<tr>
+	  <td valign="top"><font size=2>
+	      <p style='font-family:verdana; margin-top: 0; margin-bottom: 0pt'>
+	      <b>Next Steps:</b></p>
+	</td></tr></table>
+      </td>
+      <td>
+	<table width="100%"  border="0">
+      <tr>
+        <td width="4%"><img src="addInfoBand.gif" width="16" height="16"></td>
+	<td width="96%"><p style='font-family:verdana; margin-top: 0; margin-bottom: 6pt'><b><font size="2">Security Notes:</font></b></font></td>
+      </tr>
+    </table><br>
+	<p style='font-family:verdana; margin-top: 0; margin-bottom: 6pt'>
+	<font size=2>
+    <img src="dividerArt.jpg" width="267" height="2"><br><br>
+      It is <font color=red><b>highly recommended</b></font> that you update this computer with the latest security patches for your operating system. See the Windows Update Web site, <a href="http://windowsupdate.microsoft.com/" target="_blank">http://windowsupdate.microsoft.com</a>, for the latest updates. You can also get updates for <a
+href="http://www.microsoft.com/windows2000/downloads/default.asp" target="_blank">Windows 2000</a>, <a href="http://www.microsoft.com/windowsxp/pro/downloads/default.asp"
+target="_blank">Windows XP</a>, and <a href='http://www.microsoft.com/windowsserver2003/downloads/updates/default.mspx' target='_blank'>Windows Server2003</a><br>
+
+<ol>
+	<li><p style='font-family:verdana; margin-top: 0; margin-bottom: 6pt'>To analyze your computer for security vulnerabilities, see <a
+href="http://www.microsoft.com/technet/security/tools/mbsahome.mspx"
+target="_blank"><b>Microsoft Baseline Security Analyzer (MBSA)</b></a>. MBSA includes a graphical and command line interface that can perform local or remote scans of Windows systems. MBSA runs on Windows 2000 and Windows XP systems.</p></li>
+
+<li><p style='font-family:verdana; margin-top: 0; margin-bottom: 6pt'>If you installed a programming language, setup created the VS Developer and Debugger Users groups on this computer. You should only add trusted users to these groups.</p></li>
+<li><p style='font-family:verdana; margin-top: 0; margin-bottom: 6pt'>If Microsoft Internet Information Services (IIS) is installed on this computer, setup automatically registered ASP.NET.</p></li>
+<li><p style='font-family:verdana; margin-top: 0; margin-bottom: 6pt'>If you have installed to a directory other than the default directory, or you installed to a partition that uses the FAT file system, your files might not be protected from other users of the computer. If this computer is shared by other users, you are encouraged to check that the permissions on the installation directory do not allow all users to modify files. Failing to do so could pose a security risk to you.</p></li>
+</ol>
+</NOSCRIPT>
+</body>
+</html>

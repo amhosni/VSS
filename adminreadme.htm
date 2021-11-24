@@ -1,0 +1,977 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML xmlns:o>
+	<HEAD>
+		<META content="True" name="vs_showGrid">
+		<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<STYLE>BODY { PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 10pt; BACKGROUND: #ffffff; PADDING-BOTTOM: 12pt; MARGIN: 0px; COLOR: #000000; PADDING-TOP: 0px; FONT-FAMILY: Arial, Helvetica, sans-serif }
+	.banner { PADDING-RIGHT: 0px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 10pt; PADDING-BOTTOM: 6pt; WIDTH: 100%; PADDING-TOP: 6pt; BACKGROUND-COLOR: #ff9933; TEXT-ALIGN: left }
+	.tblpara { MARGIN-LEFT: 5px }
+	H1 { FONT-WEIGHT: bold; FONT-SIZE: 13.5pt; MARGIN-BOTTOM: 6pt; MARGIN-LEFT: 5px }
+	H2 { FONT-WEIGHT: bold; FONT-SIZE: 10pt; MARGIN-BOTTOM: 6pt; MARGIN-LEFT: 5px }
+	TABLE { BORDER-RIGHT: #cccccc 1px solid; BORDER-TOP: #cccccc 1px solid; FONT-SIZE: 100%; MARGIN-BOTTOM: 12pt; MARGIN-LEFT: 30px; BORDER-LEFT: #cccccc 1px solid; MARGIN-RIGHT: 30px; BORDER-BOTTOM: #cccccc 1px solid; BACKGROUND-COLOR: #ffffff }
+	TH { PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 10pt; BACKGROUND: #cccccc; PADDING-BOTTOM: 6pt; VERTICAL-ALIGN: top; PADDING-TOP: 6pt; TEXT-ALIGN: left }
+	TD { BACKGROUND: #ffffff; VERTICAL-ALIGN: top }
+	P { MARGIN-LEFT: 30px }
+	BLOCKQUOTE.dtBlock { MARGIN: 0.5em 1.5em 0.5em 2em }
+	A:link { COLOR: #0000ff }
+	A:visited { COLOR: #666699 }
+	A:hover { COLOR: #3366ff }
+	OL { MARGIN: 0.5em 0em 0em 2em }
+	UL { MARGIN: 0.5em 0em 0em 2em }
+	LI { MARGIN-BOTTOM: 0.5em; MARGIN-LEFT: 0.5em }
+	UL P { MARGIN-LEFT: 0em }
+	OL P { MARGIN-LEFT: 0em }
+	DL P { MARGIN-LEFT: 0em }
+	UL P.label { MARGIN-TOP: 0.5em }
+	OL P.label { MARGIN-TOP: 0.5em }
+	DL { MARGIN-TOP: 0em; PADDING-LEFT: 1px }
+	DD { MARGIN-BOTTOM: 0em; MARGIN-LEFT: 1.5em }
+	DT { MARGIN-TOP: 0.5em }
+	PRE { MARGIN-TOP: 0.5em; MARGIN-BOTTOM: 0.5em }
+	PRE { FONT: 100% Courier New, Courier, mono; COLOR: #000066 }
+	CODE { FONT: 100% Courier New, Courier, mono; COLOR: #000066 }
+	.code { FONT: 100% Courier New, Courier, mono; COLOR: #000066 }
+	PRE B { LETTER-SPACING: 0.1em }
+	CODE B { LETTER-SPACING: 0.1em }
+	PRE.syntax { BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #999999 1px solid; MARGIN-TOP: 1em; PADDING-LEFT: 8px; BACKGROUND: #cccccc; MARGIN-BOTTOM: 1em; PADDING-BOTTOM: 4px; BORDER-LEFT: #999999 1px solid; CURSOR: text; COLOR: #000000; PADDING-TOP: 4px; BORDER-BOTTOM: #999999 1px solid }
+	OL DIV.tablediv { MARGIN-TOP: 0em }
+	UL DIV.tablediv { MARGIN-TOP: 0em }
+	</STYLE>
+		<META content="MSHTML 6.00.2900.2180" name="GENERATOR">
+	</HEAD>
+	<BODY>
+		<DIV class="banner" id="DIV1">Microsoft Visual SourceSafe</DIV>
+		<H1>Setup Administrator Mode Readme</H1>
+		<H2>1. Introduction</H2>
+		<P>Microsoft Visual SourceSafe offers an administrator mode setup, which facilitates 
+			deployment to field clients. The administrator initially runs setup to select 
+			which features will be deployed. An .ini file is created based on this 
+			selection, and is then deployed by running setup in unattended mode, pointing 
+			to the generated .ini file. When run in unattended mode, setup installs the 
+			designated options silently. If errors occur, setup exits silently with 
+			failure. This design allows deployment through Microsoft Systems Management 
+			Server.</P>
+		<P>For more information about deploying Visual SourceSafe using SMS, see KB article 
+			327792 "HOW TO: Deploy Visual Studio .NET 2003 by Using Systems Management 
+			Server" at <A href="http://support.microsoft.com/?scid=kb;en-us;Q327792" target="_TOP">
+				http://support.microsoft.com/?scid=kb;en-us;Q327792</A>.
+		</P>
+                <p>Note: You cannot install Visual SourceSafe 2005 on a computer with the Intel Itanium processor. Attempting to deploy the Visual SourceSafe 2005 MSI to a computer with the Itanium processor will fail.
+                </P>
+		<H2>2. Running Administrator Mode Setup</H2>
+		<P>Before running this phase of administrator setup, you <B>must</B> first run 
+			Visual SourceSafe Prerequisites Setup on your computer.&nbsp; Some of the 
+			components installed by the update are required for Visual SourceSafe setup to 
+			function.</P>
+		<P>Windows Installer 3.1 is required to install Visual SourceSafe.&nbsp; Before 
+			deploying Visual SourceSafe,&nbsp;any of the prerequisites or optional components, 
+			Windows Installer 3.1 must be on the target machine.</P>
+		<P><B>Note:</B> You must run the setup.exe found in the \setup subdirectory in 
+			order to create an .ini file. The setup.exe file found at the root of the CD or 
+			DVD does not support administrator setup.</P>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH>
+						To create the deployment .ini file</TH></TR>
+				<TR>
+					<TD>
+						<OL>
+							<LI>
+							Insert the Visual SourceSafe 2005&nbsp;CD 1&nbsp;or DVD and ignore the autorun 
+							message.
+							<LI>
+								From the <B>Start</B> menu, choose <B>Run</B>.
+							<LI>
+								Type the following: <BLOCKQUOTE class="dtBlock">
+									<P class="code"><I>n</I>:\setup\Setup.exe /createunattend &lt;<I>path to .ini file</I>&gt;</P>
+									<P>For example:</P>
+									<P class="code">D:\setup\setup.exe /createunattend c:\VSS2005_deployment.ini</P>
+								</BLOCKQUOTE>
+							</LI>
+						</OL>
+					</TD>
+				</TR>
+			</TBODY></TABLE>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH>
+						To run setup with the generated file on a client</TH></TR>
+				<TR>
+					<TD>
+						<OL>
+							<LI>
+							Verify that Visual SourceSafe 2005 is available on the network (see section 3 
+							"Creating a Network Image").
+							<LI>
+								From the <B>Start</B> menu, choose <B>Run</B>.
+							<LI>
+								Type the following: <BLOCKQUOTE class="dtBlock">
+									<P class="code">\\<I>&lt;computer&gt;</I>\<I>&lt;share&gt;</I>\...\setup\Setup.exe 
+										/unattendfile &lt;<I>path to .ini file</I>&gt;</P>
+									<P>For example:</P>
+									<P class="code">\\products\VisualSourceSafe\setup\setup.exe /unattendfile 
+										\\computer\share\VSS2005_deployment.ini</P>
+								</BLOCKQUOTE>
+							</LI>
+						</OL>
+					</TD>
+				</TR>
+			</TBODY></TABLE>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH>
+						To run MSDN Library setup</TH></TR>
+				<TR>
+					<TD>
+						<OL>
+							<LI>
+							Verify that the MSDN Library is available on the network (see section 3 
+							"Creating a Network Image").
+							<LI>
+								From the <B>Start</B> menu, choose <B>Run</B>.
+							<LI>
+								Type the following: <BLOCKQUOTE class="dtBlock">
+									<P class="code">Non-Quiet Install: msiexec /i &lt;<I>path to msdn.msi (at the root of 
+											the installation source)</I>&gt;</P>
+									<P class="code">
+										Unattended Install: msiexec /qb /i &lt;<I>path to msdn.msi (at the root of the 
+											installation source)</I>&gt;</P>
+									<P>For example:</P>
+									<P class="code">msiexec.exe /qb /i \\products\VisualStudio\MSDN</P>
+								</BLOCKQUOTE><BLOCKQUOTE class="dtBlock">For further details on MSDN setup options, 
+									please refer to the readme in the top-level MSDN folder. </BLOCKQUOTE>
+							</LI>
+						</OL>
+					</TD>
+				</TR>
+			</TBODY></TABLE>
+		<H2 class="dtH1">
+			<TABLE id="Table11">
+				<TR>
+					<TH height="31">
+						To install Windows Installer 3.1 unattended</TH></TR>
+				<TR>
+					<TD>
+						<OL>
+							<LI>
+								From the <B>Start</B> menu, choose <B>Run</B>.
+							<LI>
+								Type "cmd" and then click <B>OK</B>.
+							<LI>
+								Navigate to the wcu\msi31 directory on the Visual SourceSafe CD and type the 
+								following:</LI></OL>
+						<P class="code">WindowsInstaller-KB893803-v2-x86.exe /quiet</P>
+					</TD>
+				</TR>
+			</TABLE>
+		</H2>
+		<H2 class="dtH1">
+			<TABLE id="Table7">
+				<TR>
+					<TH>
+						To install the .NET Framework unattended</TH></TR>
+				<TR>
+					<TD>
+						<OL>
+							<LI>
+								From the <B>Start</B> menu, choose <B>Run</B>.
+							<LI>
+								Type "cmd" and then click <b>OK</b>.
+							<LI>
+								Navigate to the wcu\dotnetFramework directory on the Visual SourceSafe CD and type 
+								the following:</LI></OL>
+						<P class="code">dotnetfx.exe /q:a /c:"install /q"</P>
+						<P>&nbsp;</P>
+					</TD>
+				</TR>
+			</TABLE>
+		</H2>
+		<H2 class="dtH1">
+			<H2 class="dtH1">
+				<TABLE id="Table12">
+					<TR>
+						<TH>
+							To install the 64 bit .NET Framework unattended</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Run</B>.
+								<LI>
+									Type "cmd" and then click <B>OK</B>.
+								<LI>
+									Navigate to the wcu\dotnetFramework\x64 directory on the Visual SourceSafe CD and 
+									type the following:</LI></OL>
+							<P class="code">NetFx64.exe /q:a /c:"install /q"</P>
+							<P>&nbsp;</P>
+						</TD>
+					</TR>
+				</TABLE>
+			</H2>
+			<H2 class="dtH1">
+				<TABLE id="Table14">
+					<TR>
+						<TH>
+							To install Microsoft Document Explorer 2005 unattended</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Run</B>.
+								<LI>
+									Type "cmd" and then click <B>OK</B>.
+								<LI>
+									Navigate to the wcu\DExplorer directory on the Visual SourceSafe CD and type 
+									the following:</LI></OL>
+							<P class="code">DExplore.exe /q:a /c:"install /q" </P>
+							<P>&nbsp;</P>
+						</TD>
+					</TR>
+				</TABLE>
+			</H2>
+		</H2>
+		<H2 class="dtH1">3. Creating a Network Image</H2>
+		<P>Visual SourceSafe 2005 setup may be run from a network share as an alternative to 
+			running setup from CDs or DVDs.<BR>
+			<BR>
+			The following procedure illustrates how to prepare Visual SourceSafe 2005 for 
+			installation from a network share.</P>
+		<TABLE>
+			<TBODY>
+				<TR>
+					<TH>
+						Example procedure for sharing installation files from CDs</TH></TR>
+				<TR>
+					<TD>
+						<OL>
+							<LI>
+							Create a folder on the server. For example, VSS2005.
+							<LI>
+								Create two subfolders, named <B>VS</B> and <B>MSDN</B> within the top-level 
+								folder. For example:<BR>
+								<BR>
+								VSS2005\VS<BR>
+							    VSS2005\MSDN
+							<LI>
+								Copy the contents of all CDs labeled <B>Visual SourceSafe 2005</B> to the subfolder 
+								named <B>VS</B>. If prompted, overwrite existing files.<BR>
+								<BR>
+							<LI>
+								Copy the contents of all CDs labeled <B>MSDN Library for Visual Studio 2005</B> 
+								to the subfolder named <B>MSDN</B>. If prompted, overwrite existing files.
+							<LI>
+								Open <B>setup.ini</B> in the <B>VS</B>
+							subfolder using a text editor, such as Notepad.
+							<LI>
+								In the [Documentation] section, change the line that starts with "DIR=" to 
+								"DIR=..\MSDN". For example: <BLOCKQUOTE class="dtBlock">
+									<DIV class="code">[Documentation]<BR>
+										DIR=..\MSDN</DIV>
+								</BLOCKQUOTE>
+							<LI>
+								Save your changes and close the file.
+								<P><B>Note:</B> Completing this step prevents disk-swapping requests during setup 
+									and informs setup of the correct path to the MSDN Library CD.</P>
+							<LI>
+								In the <B>VS</B> subfolder, open the <B>Setup</B>
+							folder.
+							<LI>
+								Open <B>setup.sdb</B> using a text editor, such as Notepad, and add the 
+								following lines to the end of the file: <BLOCKQUOTE class="dtBlock">
+									<DIV class="code">[Product Key]<BR>
+										<I>XXXXXXXXXXXXXXXXXXXXXXXXX</I>
+									</DIV>
+								</BLOCKQUOTE><B>Note:</B> <I>XXXXXXXXXXXXXXXXXXXXXXXXX</I>
+							is the 25 character product key found on the CD packaging. Do not enter the 
+							dashes in the product key.
+							<LI>
+								Save your changes and close the file.
+								<P><B>Note:</B> Completing this step enables pre-populating the product key for the 
+									user.</P>
+							<LI>
+								Share the <B>VSS2005</B> folder on the network and set the appropriate security 
+								settings. The path to Visual SourceSafe 2005 setup from the network looks as 
+								follows:
+								<SPAN class="code">\\&lt;<I>servername&gt;</I>\VSS2005\VS\setup.exe</SPAN>.<BR>
+								<BR>
+								<B>Note:</B>&nbsp;When installing, setup fails if any path and file name 
+								combination exceeds 260 characters. The maximum length of a path in Visual 
+								Studio is 221 characters; accordingly, you should copy files to a path with 
+								less than 70 characters. If you create a network share for a network image, the 
+								UNC path to the root install location should contain fewer than 39 characters.<BR>
+								<BR>
+								<B>Note:</B>&nbsp;Setup may fail if the folder names in this path include 
+								embedded spaces, for example "\\&lt;<I>servername&gt;</I>\VS 2005\MSDN\" or 
+								"\\&lt;<I>servername&gt;</I>\VSS2005\Visual SourceSafe\".<BR>
+							</LI>
+						</OL>
+					</TD>
+				</TR>
+			</TBODY></TABLE>
+		<H2>4. Installation Maintenance</H2>
+		<P>Setup can be run again on a computer with an existing installation to access 
+			setup maintenance features.&nbsp; Users or administrators should run setup from <B>Add 
+				or Remove Programs</B> in the Control Panel. To use the maintenance mode of 
+			setup, users need to be logged on with administrative permissions on the local 
+			machine.&nbsp;</P>
+		<H2>5. Required Prerequisite Components</H2>
+		<P>The following is a list of components required for Visual SourceSafe. Visual SourceSafe 
+			2005&nbsp;unattended setup will fail if the prerequisites are not met.</P>
+		<UL type="disc">
+		    <LI style="MARGIN-LEFT: 30px">
+			On Windows 2003, Service Pack 1 is required.
+			<LI style="MARGIN-LEFT: 30px">
+			On Windows 2000, Service Pack 4 is required.
+			<LI style="MARGIN-LEFT: 30px">
+			On Windows XP,&nbsp;Service Pack 2 is required.
+			<LI style="MARGIN-LEFT: 30px">
+			All platforms require Microsoft Internet Explorer 6 Service Pack 1.
+			<LI style="MARGIN-LEFT: 30px">
+			All platforms require Microsoft .NET Framework&nbsp;2.0.
+			<LI style="MARGIN-LEFT: 30px">
+			    Microsoft Document Explorer 2005
+			</LI>
+		</UL>
+		<P style="MARGIN-LEFT: 30px">For 64 Bit Machines, the following components are 
+			required for Visual SourceSafe.</P>
+		<UL>
+			<LI style="MARGIN-LEFT: 30px">
+			All platforms require Microsoft Internet Explorer 6 Service Pack 1.
+			<LI style="MARGIN-LEFT: 30px">
+			All platforms require Microsoft .NET Framework&nbsp;2.0.
+			<LI style="MARGIN-LEFT: 30px">
+			    Microsoft Document Explorer 2005
+			</LI>
+		</UL>
+		<p></p>
+		<H2>6. Deploying Visual SourceSafe 2005 using Active Directory</H2>
+		<H2>6.1 Verifying prerequisites for deploying Visual SourceSafe 2005</H2>
+		<P>Client computers must have all the system components that Visual SourceSafe 2005 
+			requires installed before you can install Visual SourceSafe 2005 on the computer. 
+			Network administrators must verify that all client computers have the required 
+			system components.</P>
+		<P><B>Note:</B> It is recommended that you deploy the required components in the 
+			order that they are listed. For example, Microsoft .NET Framework 2.0 requires 
+			that you install Microsoft Windows Installer 3.1 first, so Windows Installer is 
+			listed before the .NET Framework.</P>
+		<P><I>Prerequisites for deploying on Windows 2003 Server</I></P>
+		<UL type="disc">
+		    <LI style="MARGIN-LEFT: 30px">
+			Microsoft Windows 2003 Service Pack 1
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft .NET Framework 2.0
+			<LI style="MARGIN-LEFT: 30px">
+			    Microsoft Document Explorer 2005
+			</LI>
+		</UL>
+		<P><I>Prerequisites for deploying on Windows 2000</I></P>
+		<UL type="disc">
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft Windows 2000 Service Pack 4
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft Internet Explorer 6.0 Service Pack 1
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft Windows Installer 3.1
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft .NET Framework 2.0
+			<LI style="MARGIN-LEFT: 30px">
+			    Microsoft Document Explorer 2005
+			</LI>
+		</UL>
+		<P><I>Prerequisites for deploying on Windows XP</I></P>
+		<UL type="disc">
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft Windows XP Service Pack 2
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft Internet Explorer 6.0 Service Pack 1
+			<LI style="MARGIN-LEFT: 30px">
+			Microsoft .NET Framework 2.0
+			<LI style="MARGIN-LEFT: 30px">
+			    Microsoft Document Explorer 2005
+			</LI>
+		</UL>
+		<P><B>Installing required prerequisites</B></P>
+		<P>Each system component that Visual SourceSafe 2005 requires is located in the WCU 
+			folder of the Visual SourceSafe CD or DVD-ROM.
+			<H2>6.2 Creating the transform</H2>
+		<P>
+		In Windows Installer terminology, a relational database contains information 
+		about components, features, and setup properties. A transform is based on a 
+		particular package and contains the modifications to apply to that package 
+		during installation. In this solution, we have created this file for you; you 
+		can use it for deployment.
+		<P>
+		This transform provides a full install at the default install location of 
+		Visual SourceSafe 2005.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To create the transform</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Run</B>.
+								<LI>
+									Type the following: <BLOCKQUOTE class="dtBlock">
+										<DIV class="code"><I>&lt;path to Visual SourceSafe 2005&gt;</I> setup.exe 
+											/CreateTransform <I>&lt;filepathname&gt;</I></DIV>
+									</BLOCKQUOTE>
+									<P>For example:</P>
+									<BLOCKQUOTE class="dtBlock">
+										<DIV class="code">setup.exe /CreateTransform 
+											c:\mydeploymentfolder\myVSTransform.mst</DIV>
+									</BLOCKQUOTE>
+								<LI>
+									Follow the directions on the <B>Start page</B> of setup and then click <B>Continue</B>.
+								<LI>
+									On the <B>Options page</B>, select the features you intend to deploy, and then 
+									click <B>Create Transform</B>.
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+			<H2>6.3 Using group policy object to create deployment</H2>
+		<P>You must create an administrative installation point for Visual SourceSafe 2005 and 
+			all related files. You can create the administrative installation point using 
+			the <B>/a</B>
+		command line option.
+		<P>
+		Visual SourceSafe setup accepts many different command line options. The following 
+		table lists all of the command line options for setup:
+		<P>
+			<TABLE border="1">
+				<TBODY>
+					<TR>
+						<TH>
+							Command line option</TH>
+						<TH>
+							Description</TH></TR>
+					<TR>
+						<TD>
+						[start]
+						<TD>Required only for Windows 98 systems where Msiexec is not directly in the path.</TD>
+					<TR>
+						<TD>
+						Msiexec
+						<TD>Executable file name for Windows Installer.</TD>
+					<TR>
+						<TD>
+						/p
+						<TD>Enables Windows Installer to apply an update to an existing installation.</TD>
+					<TR>
+						<TD><I>[path\name of update MSP file]</I>
+						<TD>Path and file name of the MSP file for the update.</TD>
+					<TR>
+						<TD>
+						/a
+						<TD>Enables Windows Installer to perform an administrative installation of a 
+							product on a network share.</TD>
+					<TR>
+						<TD><I>[path\name of MSI file]</I>
+						<TD>Path and file name of the Windows Installer package for your original 
+							administrative image.</TD>
+					<TR>
+						<TD>
+						/qb
+						<TD>Sets the user interface to the basic level (simple progress and error 
+							handling).</TD>
+					<TR>
+						<TD>
+						/L*v
+						<TD>Turns on logging and sets a path for the log file. The *v flag causes the 
+							switch to log all information.</TD>
+					<TR>
+						<TD><I>[path\name of log file]</I>
+						<TD>Path and file name of the Windows Installer log file. If none is given, look 
+							for MSI*.log in the temp folder of the computer where command was run.</TD>
+					<TR>
+						<TD><I>[path\name of target folder]</I>
+						<TD>Path and name of the target folder where admin image will live.</TD>
+					</TR>
+				</TBODY></TABLE>
+		<P>
+		Use the following syntax for all setup commands:
+		<P class="code"><B>[start] msiexec /p</B> <I>[path\name of update MSP file]</I> <B>/a</B>
+			<I>[path\name of MSI file]</I> <B>/qb /L*v</B> <I>[path\name of log file]</I> <B>TRANSFORMS 
+				= VS2005Tran.mst PIDKEY</B> = <I>&lt;25 character product key with no spaces or 
+				dashes&gt;</I> <B>TARGETDIR=</B> <I>[path\name of target folder]</I>
+		<P>
+		You must have write access to the administrative installation point on the 
+		server and the appropriate privileges to deploy Visual SourceSafe using Active 
+		Directory.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To create the administrative installation point</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Run</B>.
+								<LI>
+									Type the following: <BLOCKQUOTE class="dtBlock">
+										<DIV class="code"><B>[start] msiexec /a</B> <I>[path\name of MSI file]</I> <B>TRANSFORMS</B>=
+											<I>&lt;name of transform file created in section 6.2&gt;</I> <B>PIDKEY=</B><I> &lt;25 
+												character product key with no spaces or dashes&gt;</I></DIV>
+									</BLOCKQUOTE>
+									<P><B>Note:</B> If you are deploying an edition of Visual SourceSafe that uses a 
+										product key pre-populated by setup, you need to locate the product key (PID) 
+										and enter the correct sequence as the value for <B>PIDKEY</B>
+									.
+									<P><B>To locate the product key</B>
+										<OL>
+											<LI>
+											At the root of the Visual SourceSafe 2005 CD or DVD-ROM, open the file setup.sdb 
+											using a text editor such as Notepad.
+											<LI>
+												The product key is located below [Product Key].
+											</LI>
+										</OL>
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+		<P>
+		Once you have created the administrative installation point, you can add the 
+		Visual SourceSafe 2005 setup package to Group Policy.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To add the Visual SourceSafe 2005 setup package to Group Policy</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Programs</B> and then choose <B>Administrative 
+										Tools</B>.
+								<LI>
+									Choose <B>Component Services</B> and then choose <B>Active Directory Users and 
+										Computers</B>.
+								<LI>
+									Right-click the Domain node and then click <B>Properties</B>.
+								<LI>
+									Select the <B>Group Policy</B> tab, and then click <B>Edit</B>. A window is 
+								displayed with the Default Domain Policy tree.
+								<LI>
+									Expand <B>Computer Configuration</B> and then right-click <B>Software installation</B>.
+								<LI>
+									Select <B>New</B> and then click <B>Package</B>.
+								<LI>
+									In the <B>Open</B> dialog box, browse to the location where you copied the 
+									Visual SourceSafe 2005 files and select VS_setup.msi. Click <B>OK</B>.
+								<LI>
+									In the <B>Deploy Software</B> dialog box, choose <B>Advanced published or assigned</B>
+									and then click <B>OK</B>. The <B>Visual SourceSafe 2005 - English Properties</B>
+									dialog box appears.
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+			If you plan on deploying Visual SourceSafe in one language to a machine with a 
+			different default operating system language, please follow the following steps.</P>
+		<P>
+			<TABLE id="Table1">
+				<TR>
+					<TH>
+						<P>To deploy Visual SourceSafe in one language to an operating system with a different 
+							default language</P>
+					</TH>
+				</TR>
+				<TR>
+					<TD>
+						<OL>
+							<LI>
+								Open the <STRONG>Group Policy Object Editor</STRONG>
+							for your domain &amp; policy.
+							<LI>
+								Open the properties of the <STRONG>Visual SourceSafe 2005&nbsp;&lt;language&gt;</STRONG>
+							package.
+							<LI>
+								Click the <STRONG>Deployment</STRONG>
+							tab.
+							<LI>
+								Click the <STRONG>Advanced</STRONG>... button.
+							<LI>
+								Check the box for <STRONG>Ignore language when deploying this package.</STRONG>
+							<LI>
+								Click <STRONG>OK.</STRONG>
+							<LI>
+								Click <STRONG>OK.</STRONG></LI></OL>
+						<P>You will also need to set the "Ignore language when deploying this package" for 
+							the .NET Framework language pack and the J# language pack.&nbsp;&nbsp;&nbsp;</P>
+					</TD>
+				</TR>
+			</TABLE>
+		</P>
+		<P><B>Verifying that the package is ready to be deployed</B>
+		<P>
+		The following instructions specify how administrators need to modify settings 
+		for the newly created package within Active Directory.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To verify that Visual SourceSafe is ready to be deployed</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									<B>Visual SourceSafe 2005 - English Properties</B> dialog box, select the <B>Deployment</B>
+								tab.
+								<LI>
+									Under <B>Deployment type</B> choose <B>Assigned</B>.
+								<LI>
+									Under <B>Deployment options</B>, select the correct options for when and 
+								how to deploy Visual SourceSafe.
+								<LI>
+									Select the <B>Modifications</B> tab, and then click <B>Add</B>.
+								<LI>
+									Select the transform file you created earlier, such as myVSTransform.mst, and 
+									then click <B>Open</B>
+								to add the file.
+								<LI>
+									Browse the other available tabs and make choices as necessary.
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+		<P><B>Setting elevated privileges via Group Policy</B></P>
+		<P>
+		Because the Visual SourceSafe 2005 package, like most packages, allows only local 
+		administrators of the machine to install the package, IT administrators should 
+		use elevated privileges to advertise the package per-machine or per-user in 
+		Group Policy.
+		<P>
+		Administrators can create policies for one user, one computer, or a group of 
+		users. If administrators need to enforce a set of policies for one individual, 
+		they can create a policy for this user, and the policy will be applied when the 
+		user logs on. See the System Policy Editor Help for more information on 
+		creating special policy profiles. For more information on configuring policies, 
+		see the Group Policy snap-in Help.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To set elevated privileges</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Programs</B> and then choose <B>Administrative 
+										Tools</B>.
+								<LI>
+									Choose <B>Component Services</B> and then expand <B>Active Directory Users and 
+										Computers</B>.
+								<LI>
+									Right-click the Domain node, click <B>Properties</B>, and then choose the <B>Group 
+										Policy</B>
+								tab.
+								<LI>
+									In the <B>Group Policy Objects Links</B> box, select a Group Policy Object 
+									(GPO) and then click <B>Edit</B>.
+								<LI>
+								Open the Local Computer Policy\Administrative Templates\Windows 
+								Component\Windows Installer folder.
+								<LI>
+									In the details pane, double-click <B>install with elevated privileges policy</B>.
+								<LI>
+									In the <B>Group Policy Property </B>dialog box, select the policy and then 
+									choose the check box to turn the setting on, and then click <B>OK</B>.
+								<LI>
+									Open the User Configuration\Administrative Templates\Windows Component\Windows 
+									Installer folder and repeat Steps 7 and 8.
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+		<P>You can use the System Policy Editor and Windows Installer policy to set the <B>Always 
+				install with elevated privileges</B>
+		policy. You must set the policy for the computer and for each user. If you 
+		choose not to use the Group Policy Editor or the System Policy Editor, you can 
+		specify the same setting on each computer by changing a value in the Windows 
+		registry.
+		<P><B>Verifying that the recently created Active Directory package can be installed</B>
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To set elevated privileges</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+								Restart one of the client computers where Visual SourceSafe 2005 was deployed.
+								<LI>
+									Log on to the restarted computer and verify that Visual SourceSafe 2005 has been 
+									installed.
+									<P><B>Note</B>: Do not choose <B>Cancel</B> on the Windows Installer dialog box 
+										that appears when the product starts.</P>
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+			<H2>6.4 Deploying the .NET Framework using Active Directory</H2>
+		<P>
+		This section describes the specific procedures for using Active Directory to 
+		deploy the Windows Installer setup package for Dotnetfx.exe across a network. 
+		To deploy the .NET Framework redistributable package, Dotnetfx.exe, with 
+		administrator privileges, you must extract the Windows Installer file, 
+		netfx.msi, from the Dotnetfx.exe file. Netfx.msi is the file you will use to 
+		deploy the .NET Framework.
+		<P>
+		Before you can install a Windows Installer setup package on an Active Directory 
+		client computer, the client computer must have the Windows Installer 
+		installation service installed. The procedure described in this section assumes 
+		that Windows Installer 2.0 is installed on all client computers prior to the 
+		deployment of Dotnetfx.exe. Windows Installer 2.0 is available for download 
+		from the Microsoft Download Center. Note that these installer files are not 
+		designed for deployment using Active Directory. They must either be installed 
+		on each computer individually or electronically using Systems Management 
+		Server.
+		<P>In addition, there are minimum configuration requirements that must be met in 
+			order to install the .NET Framework on a computer. For specific software and 
+			hardware requirements and recommendations, see "Redistributing the .NET 
+			Framework 1.1" at <A href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnnetdep/html/redistdeploy1_1.asp">
+				http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnnetdep/html/redistdeploy1_1.asp</A>
+		.
+		<P>
+		First, extract the Dotnetfx.exe file that you will use to deploy the .NET 
+		Framework.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To extract the Dotnetfx.exe file to deploy the .NET Framework</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+								Download Dotnetfx.exe to the root directory of the C:\ drive on your local 
+								computer.
+								<LI>
+									From the <B>Start</B> menu, choose <B>Run</B>.
+								<LI>
+								Change the directory to the root of the C:\ drive.
+								<LI>
+									At the command prompt, type the following to create a directory in which to 
+									copy Dotnetfx.exe: <BLOCKQUOTE class="dtBlock">
+										<DIV class="code">mkdir dotnetfx</DIV>
+									</BLOCKQUOTE>
+								<LI>
+									Type the following to extract the files to the dotnetfx directory: <BLOCKQUOTE class="dtBlock">
+										<DIV class="code">dotnetfx.exe /q /c:"msiexec /qb /a netfx.msi TARGETDIR=c:\dotnetfx"</DIV>
+									</BLOCKQUOTE>
+								<LI>
+								Close the command prompt window.
+								<LI>
+								Open Windows Explorer and navigate to c:\dotnetfx to verify that the files were 
+								extracted.
+								<LI>
+									Move the dotnetfx folder and all its contents to the network share you intend 
+									to use for deployment.
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+		<P>
+		After you have moved the dotnetfx folder to the proper location for deployment, 
+		the next step is to create an Active Directory package for the .NET Framework.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To create a .NET Framework package in Active Directory</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Programs</B> and then choose <B>Administrative 
+										Tools</B>.
+								<LI>
+									Choose <B>Component Services</B> and then expand <B>Active Directory Users and 
+										Computers</B>. The <B>Active Directory Users and Computers</B>
+								tree is displayed.
+								<LI>
+									Right-click the Domain node and then choose <B>Properties</B>.
+								<LI>
+									In the <B>Properties</B> dialog box, choose the <B>Group Policy</B> tab and 
+									then click <B>Edit</B>.
+								<LI>
+									If you intend to set policies that apply to computers regardless of who logs on 
+									to them, expand <B>Computer Configuration</B>.
+									<P><B>Note</B>: Ensure that you map to the shared location on the Active Directory 
+										server; otherwise, it will not let you create a package for installation.</P>
+								<LI>
+									Right-click <B>Software installation</B>, choose <B>New</B> and then choose <B>Package</B>.
+								<LI>
+									In the <B>Open</B>
+								dialog box, browse to the location where you copied the dotnetfx folder, and 
+								select netfx.msi.
+								<LI>
+									In the <B>Deploy Software</B> dialog box, choose <B>Advanced Published or Assigned</B>
+									and then click <B>OK</B>.
+								<LI>
+									Choose <B>Auto Install</B>
+								to install the software automatically on every computer in the domain.
+								<LI>
+									Click <B>OK</B> and then exit the <B>Active Directory Users and Computers</B> console.
+								</LI>
+							</OL>
+							<P><STRONG>Note:</STRONG> User published deployment of the .NET Framework is not 
+								supported.</P>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+		<P><B>Setting the Elevated Privileges via Group Policy</B>
+		<P>
+		Since .NET Framework package (like most packages) only allows local 
+		administrators of the machine to install the package, you should use elevated 
+		privileges to advertise the package per-machine in Group Policy. As an 
+		administrator you can create policies for one user, one computer, or a group of 
+		users. See the System Policy Editor Help for more information on creating 
+		special policy profiles. Also, see the Group Policy snap-in Help for more 
+		information on configuring policies.
+		<P>
+		Follow these steps to set this policy for deploying .NET Framework:
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To deploy the .NET Framework</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									From the <B>Start</B> menu, choose <B>Programs</B> and then choose <B>Administrative 
+										Tools</B>.
+								<LI>
+									Choose <B>Component Services</B> and then expand <B>Active Directory Users and 
+										Computers</B>. The <B>Active Directory Users and Computers</B>
+								tree is displayed.
+								<LI>
+									Right-click the Domain node and then choose <B>Properties</B>.
+								<LI>
+									Select the <B>Group Policy</B>
+								tab.
+								<LI>
+									In the <B>Group Policy Objects Links</B> box, select a Group Policy Object and 
+									then click <B>Edit</B>.
+								<LI>
+								Open the Local Computer Policy\Administrative Templates\Windows 
+								Component\Windows Installer folder.
+								<LI>
+									In the details pane, double-click the <B>Always install with elevated privileges</B>
+								policy.
+								<LI>
+									In the <B>Group Policy Property</B> dialog box, enable the policy, select the 
+									check box to turn the setting on, and then click <B>OK</B>.
+								<LI>
+									Open the User Configuration\Administrative Templates\Windows Component\Windows 
+									Installer folder and repeat Steps 8 and 9.
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+		<P><B>Verification that package is ready to be assigned to machines</B>
+		<P>
+		After you complete the setup of the .NET Framework package in Group Policy, the 
+		next step is to verify that package is available for installation. To follow 
+		are instructions on how administrators need to modify settings for the newly 
+		created package within Active Directory.
+		<P>
+			<TABLE>
+				<TBODY>
+					<TR>
+						<TH>
+							To verify that the .NET Framework is ready to be deployed</TH></TR>
+					<TR>
+						<TD>
+							<OL>
+								<LI>
+									<B>.NET Framework 2.0 - English Properties</B> dialog box, select the <B>Deployment</B>
+								tab.
+								<LI>
+									Under <B>Deployment type</B> choose <B>Assigned</B> or <B>Published</B>.
+								<LI>
+									Under <B>Deployment options</B>, select the correct options for when and 
+								how to deploy the .NET Framework.
+								<LI>
+									Browse the other available tabs and make choices as necessary. For details, see 
+									Group Policy Help available in the dialog box.
+								</LI>
+							</OL>
+						</TD>
+					</TR>
+				</TBODY></TABLE>
+			<H2>6.5 Deploying SSE using Active Directory</H2>
+		<P><B>Note:</B> SSE is not deployable via Active Directory.</P>
+		<H2>7. Specifying Watson Settings</H2>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><B><SPAN style="FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: black">Registry</SPAN></B><SPAN style="FONT-SIZE: 10pt; COLOR: black">
+				<o:p></o:p>
+			</SPAN></P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><SPAN style="FONT-SIZE: 10pt; COLOR: black">You can configure how Visual SourceSafe Watson behaves on 
+individual computers using the following registry sub-key: <o:p></o:p></SPAN></P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><SPAN style="FONT-SIZE: 10pt; COLOR: black">DW\VSSetup\Product Name Value\Product Version Number under 
+HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting\ <o:p></o:p></SPAN></P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><SPAN style="FONT-SIZE: 10pt; COLOR: black">Replace Name Value\Product Version Number with the values 
+for VSSWProdName and VSSWProdVer flags specified in the file setup.sdb located 
+at <I><SPAN style="FONT-STYLE: italic">n</SPAN></I>:\setup\ on the installation CD or DVD-ROM. 
+<o:p></o:p></SPAN></P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><SPAN style="FONT-SIZE: 10pt; COLOR: black">For example: <o:p></o:p></SPAN></P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><SPAN style="FONT-SIZE: 10pt; COLOR: black">[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting\DW\VSSetup\Visual 
+C# 2005 Express Edition Beta\8.0.xxxx] <o:p></o:p></SPAN></P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><SPAN style="FONT-SIZE: 10pt; COLOR: black">"VSSWSectionEnabled"=dword:00000001 
+<o:p></o:p></SPAN></P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 22.5pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"><SPAN style="FONT-SIZE: 10pt; COLOR: black">"VSSWUXEnabled"=dword:00000001 
+<o:p></o:p></SPAN>
+		<P>
+			<H2>8. Known Installation Issues</H2>
+			<H2>8.1. Data file cannot be created</H2>
+		<P>If you run setup in createunattend mode with a file that already exists, the 
+			following error appears: "The data file &lt;<I>filename</I>
+		&gt; cannot be created. Setup cannot continue."
+		<P>To correct this error, either delete the existing file, or provide a unique file 
+			name.</P>
+		<H5 class="dtH1">&nbsp;8.2. Visibility of user-specific data</H5>
+		<P>When you create an unattended install file, some user-specific data might appear 
+			in the file. Specifically, the name of the user who created the file and their 
+			organization name appear as two line items:</P>
+		<UL style="MARGIN: 0.5em 0em 0em 2em" type="disc">
+			<LI style="MARGIN-BOTTOM: 0.5em; MARGIN-LEFT: 30px">
+			gfn_pid core user name=Your Name
+			<LI style="MARGIN-BOTTOM: 0.5em; MARGIN-LEFT: 30px">
+				gfn_pid core organization=Your Company
+			</LI>
+		</UL>
+		<P>You can change the values of these variables before using the .ini file, but do 
+			not delete the lines completely</P>
+		<H2>9. Deployment of Visual SourceSafe Service Releases</H2>
+		<P>For information on downloading and deploying Visual SourceSafe Service Releases, see <A href="http://go.microsoft.com/fwlink/?LinkId=10605">
+				http://go.microsoft.com/fwlink/?LinkId=10605</A>.</P>
+		</LI>
+	</BODY>
+</HTML>
